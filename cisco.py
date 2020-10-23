@@ -11,10 +11,12 @@ __author__ = "Philippe Ouellette"
 __author_email__ = "philippe.ouellette@groupeaffi.ca"
 __copyright__ = "Groupe AFFI"
 
+fullDate = str(date.today().strftime("%d-%m-%Y"))
+monthDate = str(date.today().strftime("%m-%Y"))
+dest = "\\\cabcvsdat01\\boucherville\\FichiersCommuns\\Technologies de l'information\\Infrastructures\\Reseaux\\Backup Configs Network\\"
+full_dest = dest + monthDate + "\\" + fullDate
+
 def CreateDirectory():
-    fullDate = str(date.today().strftime("%d-%m-%Y"))
-    monthDate = str(date.today().strftime("%m-%Y"))
-    dest = "\\\cabcvsdat01\\boucherville\\FichiersCommuns\\Technologies de l'information\\Infrastructures\\Reseaux\\Backup Configs Network\\"
 
     if monthDate not in os.listdir(dest):
         os.mkdir(dest + monthDate)#Create the directory with the fulldate in the "month-year" folder
@@ -31,7 +33,7 @@ def backup_cisco(equipment_name):
     router_config.close()
     print("Sauvegarde effectuée !")
     print("")
-    shutil.move(equipment_name + '.txt', dest)
+    shutil.move(equipment_name + '.txt', full_dest)
 
 def backup_fortinet(equipment_name):
     print("Connexion à " + equipment_name + " ...")
@@ -44,7 +46,7 @@ def backup_fortinet(equipment_name):
     router_config.close()
     print("Sauvegarde effectuée !")
     print("")
-    shutil.move(equipment_name + '.txt', dest)
+    shutil.move(equipment_name + '.txt', full_dest)
 
 def main():
     os.system('cls')
