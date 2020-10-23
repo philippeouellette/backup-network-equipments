@@ -37,6 +37,13 @@ cisco = {
               'host':   '10.68.80.120',
               'username': cisco_username,
               'password': cisco_password,
+          },          
+          'CAANJCPRV01' :
+          {
+              'device_type': 'cisco_ios',
+              'host':   '10.68.34.10',
+              'username': cisco_username,
+              'password': cisco_password,
           }
   }
 

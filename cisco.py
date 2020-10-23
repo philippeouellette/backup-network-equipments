@@ -11,17 +11,14 @@ __author__ = "Philippe Ouellette"
 __author_email__ = "philippe.ouellette@groupeaffi.ca"
 __copyright__ = "Groupe AFFI"
 
-os.system('cls')
-#variables
-date = str(date.today().strftime("%d-%m-%Y"))
-dest = "\\\cabcvsdat01\\boucherville\\FichiersCommuns\\Technologies de l'information\\Infrastructures\\Reseaux\\Backup Configs Network\\" + date
+def CreateDirectory():
+    fullDate = str(date.today().strftime("%d-%m-%Y"))
+    monthDate = str(date.today().strftime("%m-%Y"))
+    dest = "\\\cabcvsdat01\\boucherville\\FichiersCommuns\\Technologies de l'information\\Infrastructures\\Reseaux\\Backup Configs Network\\"
 
-try:
-    os.mkdir(dest)
-except OSError:
-    print ("Creation of the directory " + dest + " failed")
-else:
-    print ("Successfully created the directory " + dest)
+    if monthDate not in os.listdir(dest):
+        os.mkdir(dest + monthDate)#Create the directory with the fulldate in the "month-year" folder
+    os.mkdir(dest + monthDate + "\\" + fullDate)
 
 def backup_cisco(equipment_name):
     print("Connexion à " + equipment_name + " ...")
@@ -49,9 +46,18 @@ def backup_fortinet(equipment_name):
     print("")
     shutil.move(equipment_name + '.txt', dest)
 
+def main():
+    os.system('cls')
 
-for key in cisco:
-    backup_cisco(key)
+    try:
+        CreateDirectory()
+    except Exception as e:
+        print(e)
 
-for key in fortinet:
-    backup_fortinet(key)
+    for key in cisco:
+        backup_cisco(key)
+
+    for key in fortinet:
+        backup_fortinet(key)
+
+main()
